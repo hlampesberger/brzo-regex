@@ -1,7 +1,7 @@
 from pyparsing import Literal, Word, OneOrMore, alphanums, alphas, printables, Optional, \
     Forward, ParseBaseException, Empty
 
-from regex import *
+from brzo.regex import *
 
 def match(regex, strng):
     regex = regex.approximate()

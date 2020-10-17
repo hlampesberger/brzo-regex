@@ -1,2 +1,6 @@
-.vscode/settings.json
+.vscode
 brzo-regex/__pycache__/*.pyc
+.env
+*.png
+!doc/*.png
+*.gv
