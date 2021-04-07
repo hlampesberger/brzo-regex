@@ -13,7 +13,7 @@ class Regex(metaclass=ABCMeta):
     @abstractmethod
     def nullable(self): pass
     def __repr__(self):
-        return "%s()" % self.__cls_.__name__
+        return f"{self.__cls_.__name__}()"
     def approximate(self):
         return self
     
@@ -23,7 +23,7 @@ class Terminal(Regex):
     def __hash__(self):
         return hash(self.value)
     def __repr__(self):
-        return "%s(%s)" % (self.__cls_.__name__, repr(self.value)) 
+        return f"{self.__cls_.__name__}({repr(self.value)})"
     def __eq__(self, other):
         if isinstance(other, Terminal):
             return self.value == other.value
@@ -36,7 +36,7 @@ class UnaryRegex(Regex):
     def __hash__(self):
         return hash(self.child)
     def __repr__(self):
-        return "%s(%s)" % (self.__cls_.__name__, repr(self.child))
+        return f"{self.__cls_.__name__}({repr(self.child)})"
     def __eq__(self, other):
         if isinstance(other, UnaryRegex):
             return self.child == other.child
@@ -50,7 +50,7 @@ class BinaryRegex(Regex):
     def __hash__(self):
         return hash((self.left, self.right))
     def __repr__(self):
-        return "%s(%s, %s)" % (self.__cls_.__name__, repr(self.left), repr(self.right))      
+        return f"{self.__cls_.__name__}({repr(self.left)}, {repr(self.right)})"
     def __eq__(self, other):
         if isinstance(other, BinaryRegex):
             return self.left == other.left and self.right == other.right
@@ -106,7 +106,7 @@ class Alt(BinaryRegex):
         return Alt(left, right)
     
     def __str__(self):
-        return str(self.left) + "|" + str(self.right)
+        return f"({self.left}|{self.right})"
         
 
     
@@ -130,7 +130,7 @@ class Seq(BinaryRegex):
         return Seq(left, right)
     
     def __str__(self):
-        return str(self.left) + str(self.right)
+        return f"{str(self.left)}{str(self.right)}"
     
     
 class Rep(UnaryRegex):
@@ -148,7 +148,7 @@ class Rep(UnaryRegex):
 
     def __str__(self):
         if isinstance(self.child, Terminal):
-            return str(self.child) + "*"
+            return f"{str(self.child)}*"
         else:
-            return "(" + str(self.child) + ")*"
+            return f"({str(self.child)})*"
 
